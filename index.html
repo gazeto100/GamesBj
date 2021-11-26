@@ -11,11 +11,12 @@
     </style>
 </head>
 <body>
-
+    <div id="phaser-app"></div>
 <script type="text/javascript">
 
 var config = {
     type: Phaser.AUTO,
+    parent	: 'phaser-app',
     width: 1080,
     height: 1920,
     physics: {
@@ -48,24 +49,25 @@ function preload ()
 
 function create ()
 {
-
-
+    window.addEventListener('resize', resizeApp);
+   // game.setScale(2);
     
-    var bgr = this.add.sprite(0, 0, 'bgr').setOrigin(0, 0);
+    var bgr = this.add.image(0, 0, 'bgr').setOrigin(0, 0);
 
-    var c1 = this.add.sprite(0, window.innerHeight, 'c1').setOrigin(0, 0);
-    var c5 = this.add.sprite(220, window.innerHeight, 'c5').setOrigin(0, 0);
-    var c10 = this.add.sprite(440, window.innerHeight, 'c10').setOrigin(0, 0);
-    var c25 = this.add.sprite(660, window.innerHeight, 'c25').setOrigin(0, 0);
-    var c100 =  this.add.sprite(880, window.innerHeight, 'c100').setOrigin(0, 0);
+    var c1 = this.add.image(0, 0, 'c1').setOrigin(0, 0);
+    var c5 = this.add.image(220, 0, 'c5').setOrigin(0, 0);
+    var c10 = this.add.image(440, 0, 'c10');
+    var c25 = this.add.image(0, window.innerHeight, 'c25');
+    var c100 =  this.add.image(0, window.innerHeight, 'c100');
 
-
+ 
     scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
    
 }
 
 function update ()
 {
+    window.addEventListener('resize', resizeApp);
     scoreText.setText(window.innerHeight+"/"+window.innerWidth);
 }
 
@@ -80,6 +82,33 @@ function resize() {
         canvas.style.height = height + "px";
     }
 }
+
+function resizeApp ()
+{
+    // Width-height-ratio of game resolution
+    // Replace 360 with your game width, and replace 640 with your game height
+    let game_ratio = 360 / 640;
+	
+    // Make div full height of browser and keep the ratio of game resolution
+    let div = document.getElementById('phaser-app');
+    div.style.width = (window.innerHeight * game_ratio) + 'px';
+    div.style.height = window.innerHeight + 'px';
+	
+    // Check if device DPI messes up the width-height-ratio
+    let canvas	= document.getElementsByTagName('canvas')[0];
+	
+    let dpi_w	= parseInt(div.style.width) / canvas.width;
+    let dpi_h	= parseInt(div.style.height) / canvas.height;		
+	
+    let height	= window.innerHeight * (dpi_w / dpi_h);
+    let width	= height * game_ratio;
+	
+    // Scale canvas	
+    canvas.style.width	= width + 'px';
+    canvas.style.height	= height + 'px';
+}
+
+
 
 </script>
 
