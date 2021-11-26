@@ -1,0 +1,86 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8" />
+    <title>Making your first Phaser 3 Game - Part 10</title>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<script type="text/javascript">
+
+var config = {
+    type: Phaser.AUTO,
+    width: 1080,
+    height: 1920,
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 300 },
+            debug: false
+        }
+    },
+    scene: {
+        preload: preload,
+        create: create,
+        update: update
+    }
+};
+
+var game = new Phaser.Game(config);
+
+function preload ()
+{
+    this.load.image('bgr', 'assets/img/Blackjack1.png');
+
+    this.load.image('c1', 'assets/coin/1.png');
+    this.load.image('c5', 'assets/coin/5.png');
+    this.load.image('c10', 'assets/coin/10.png');
+    this.load.image('c25', 'assets/coin/25.png');
+    this.load.image('c100', 'assets/coin/100.png');
+
+}
+
+function create ()
+{
+
+
+    
+    var bgr = this.add.sprite(0, 0, 'bgr').setOrigin(0, 0);
+
+    var c1 = this.add.sprite(0, window.innerHeight, 'c1').setOrigin(0, 0);
+    var c5 = this.add.sprite(220, window.innerHeight, 'c5').setOrigin(0, 0);
+    var c10 = this.add.sprite(440, window.innerHeight, 'c10').setOrigin(0, 0);
+    var c25 = this.add.sprite(660, window.innerHeight, 'c25').setOrigin(0, 0);
+    var c100 =  this.add.sprite(880, window.innerHeight, 'c100').setOrigin(0, 0);
+
+
+    scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+   
+}
+
+function update ()
+{
+    scoreText.setText(window.innerHeight+"/"+window.innerWidth);
+}
+
+function resize() {
+    var canvas = game.canvas, width = window.innerWidth, height = window.innerHeight;
+    var wratio = width / height, ratio = canvas.width / canvas.height;
+    if (wratio < ratio) {
+        canvas.style.width = width + "px";
+        canvas.style.height = (width / ratio) + "px";
+    } else {
+        canvas.style.width = (height * ratio) + "px";
+        canvas.style.height = height + "px";
+    }
+}
+
+</script>
+
+</body>
