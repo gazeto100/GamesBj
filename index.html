@@ -15,7 +15,7 @@
 <script type="text/javascript">
 
 var config = {
-    type: Phaser.AUTO,
+    type: Phaser.canvas,
     parent	: 'phaser-app',
     width: 1080,
     height: 1920,
@@ -45,20 +45,22 @@ function preload ()
     this.load.image('c25', 'assets/coin/25.png');
     this.load.image('c100', 'assets/coin/100.png');
 
+
+    window.addEventListener('resize', resizeApp);
 }
 
 function create ()
 {
-    window.addEventListener('resize', resizeApp);
+    //window.addEventListener('resize', resizeApp);
    // game.setScale(2);
     
     var bgr = this.add.image(0, 0, 'bgr').setOrigin(0, 0);
 
     var c1 = this.add.image(0, 0, 'c1').setOrigin(0, 0);
     var c5 = this.add.image(220, 0, 'c5').setOrigin(0, 0);
-    var c10 = this.add.image(440, 0, 'c10');
-    var c25 = this.add.image(0, window.innerHeight, 'c25');
-    var c100 =  this.add.image(0, window.innerHeight, 'c100');
+    var c10 = this.add.image(440, 0, 'c10').setOrigin(0, 0);
+    var c25 = this.add.image(660, 0, 'c25').setOrigin(0, 0);
+    var c100 =  this.add.image(880, 0, 'c100').setOrigin(0, 0);
 
  
     scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
@@ -67,20 +69,8 @@ function create ()
 
 function update ()
 {
-    window.addEventListener('resize', resizeApp);
+    window.addEventListener('resizeApp', resizeApp);
     scoreText.setText(window.innerHeight+"/"+window.innerWidth);
-}
-
-function resize() {
-    var canvas = game.canvas, width = window.innerWidth, height = window.innerHeight;
-    var wratio = width / height, ratio = canvas.width / canvas.height;
-    if (wratio < ratio) {
-        canvas.style.width = width + "px";
-        canvas.style.height = (width / ratio) + "px";
-    } else {
-        canvas.style.width = (height * ratio) + "px";
-        canvas.style.height = height + "px";
-    }
 }
 
 function resizeApp ()
